@@ -31,7 +31,8 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 // Koneksi ke database (file akan otomatis dibuat)
-const db = new sqlite3.Database('./database.db');
+const dbPath = process.env.DATABASE_PATH || './database.db';
+const db = new sqlite3.Database(dbPath);
 
 // Buat tabel jika belum ada
 db.serialize(() => {
