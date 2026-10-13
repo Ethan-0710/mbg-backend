@@ -1,0 +1,4 @@
+node_modules/ 
+databse.db 
+*.log 
+.env 
