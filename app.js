@@ -24,7 +24,8 @@ const TITIK_KAMPUS2 = {
   lon: 107.60633916440877   // ← GANTI dengan longitude rumah
 };
 
-const RADIUS_METER = 100;
+const RADIUS_METER_RUMAH = 100;
+const RADIUS_METER_KAMPUS = 500;
 
 // Middleware untuk membaca JSON dari request body
 app.use(bodyParser.json());

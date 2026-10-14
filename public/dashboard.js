@@ -41,8 +41,8 @@ async function ambilDataPerjalanan() {
         const data = await res.json();
 
         // ===== Update ringkasan =====
-        document.getElementById('txtBerangkat').innerText = data.perjalanan?.waktu_berangkat || '-';
-        document.getElementById('txtTiba').innerText = data.perjalanan?.waktu_tiba || '-';
+        document.getElementById('txtBerangkat').innerText = data.perjalanan?.waktu_berangkat ? formatWIB(data.perjalanan.waktu_berangkat) : '-';
+        document.getElementById('txtTiba').innerText = data.perjalanan?.waktu_tiba ? formatWIB(data.perjalanan.waktu_tiba) : '-';
         document.getElementById('txtDurasi').innerText = data.perjalanan?.waktu_perjalanan_format || '-';
         document.getElementById('txtTotal').innerText = data.total_titik || 0;
 
@@ -79,7 +79,7 @@ async function ambilDataPerjalanan() {
             tr.className = "hover:bg-gray-50";
             tr.innerHTML = `
                 <td class="p-4 font-medium">${row.id}</td>
-                <td class="p-4">$formatWIB({row.timestamp)}</td>
+                <td class="p-4">${formatWIB(row.timestamp)}</td>
                 <td class="p-4">${row.latitude.toFixed(6)}</td>
                 <td class="p-4">${row.longitude.toFixed(6)}</td>
                 <td class="p-4">${row.jarak_ke_rumah} m</td>
