@@ -23,6 +23,13 @@ async function setTanggalDefault() {
     }
 }
 
+function formatWIB(timestamp) {
+    return new Date(timestamp).toLocaleString('id-ID', { 
+        timeZone: 'Asia/Jakarta' 
+    });
+}
+
+
 // ===== 2. Ambil data perjalanan =====
 async function ambilDataPerjalanan() {
     const tanggal = filterTanggal.value;
@@ -72,7 +79,7 @@ async function ambilDataPerjalanan() {
             tr.className = "hover:bg-gray-50";
             tr.innerHTML = `
                 <td class="p-4 font-medium">${row.id}</td>
-                <td class="p-4">${row.waktu}</td>
+                <td class="p-4">$formatWIB({row.timestamp)}</td>
                 <td class="p-4">${row.latitude.toFixed(6)}</td>
                 <td class="p-4">${row.longitude.toFixed(6)}</td>
                 <td class="p-4">${row.jarak_ke_rumah} m</td>
