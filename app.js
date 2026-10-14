@@ -269,9 +269,9 @@ app.get('/api/perjalanan', (req, res) => {
             );
             
             let label;
-            if (jarakKeRumah < RADIUS_METER) {
+            if (jarakKeRumah < RADIUS_METER_RUMAH) {
                 label = 'Rumah';
-            } else if (jarakKeKampus < RADIUS_METER) {
+            } else if (jarakKeKampus < RADIUS_METER_KAMPUS) {
                 label = 'Kampus';
             } else {
                 label = 'Di Jalan';
@@ -324,7 +324,8 @@ app.get('/api/perjalanan', (req, res) => {
             titik_referensi: {
                 rumah: TITIK_RUMAH,
                 kampus: TITIK_KAMPUS,
-                radius_meter: RADIUS_METER
+                radius_meter_rumah: RADIUS_METER_RUMAH,
+                radius_meter_kampus: RADIUS_METER_KAMPUS
             },
             total_titik: titikKlasifikasi.length,
             ringkasan: {
