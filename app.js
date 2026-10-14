@@ -137,7 +137,7 @@ function haversine(lat1, lon1, lat2, lon2) {
 }
 
 // Endpoint untuk menghitung jarak & kecepatan antara dua titik GPS
-// Endpoint untuk menghitung jarak & kecepatan antara dua titik GPS
+
 app.get('/api/gps/distance', (req, res) => {
   const tanggal = req.query.tanggal; // format: YYYY-MM-DD
 
@@ -281,7 +281,6 @@ app.get('/api/perjalanan', (req, res) => {
                 latitude: row.latitude,
                 longitude: row.longitude,
                 timestamp: row.timestamp,
-                waktu: new Date(row.timestamp).toLocaleString('id-ID'),
                 jarak_ke_rumah: Math.round(jarakKeRumah),
                 jarak_ke_kampus: Math.round(jarakKeKampus),
                 label: label
@@ -305,8 +304,8 @@ app.get('/api/perjalanan', (req, res) => {
             // Titik kampus PERTAMA (saat benar-benar tiba)
             const kampusPertama = titikKampus[0];
             
-            waktuBerangkat = rumahTerakhir.waktu;
-            waktuTiba = kampusPertama.waktu;
+            waktuBerangkat = rumahTerakhir.timestamp;
+            waktuTiba = kampusPertama.timestamp;
             
             const selisihMs = kampusPertama.timestamp - rumahTerakhir.timestamp;
             waktuPerjalananMenit = Math.round(selisihMs / 1000 / 60);
