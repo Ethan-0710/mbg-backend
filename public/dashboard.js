@@ -107,6 +107,7 @@ async function ambilDataPerjalanan() {
             tr.className = "hover:bg-gray-50";
             tr.innerHTML = `
                 <td class="p-4 font-medium">${row.id}</td>
+                <td class="p-4 font-mono text-xs text-blue-600">${row.device_id ? row.device_id.substring(0, 8) + '...' : '-'}</td>
                 <td class="p-4">${formatWIB(row.timestamp)}</td>
                 <td class="p-4">${row.latitude.toFixed(6)}</td>
                 <td class="p-4">${row.longitude.toFixed(6)}</td>

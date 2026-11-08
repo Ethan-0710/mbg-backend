@@ -283,6 +283,7 @@ app.get('/api/perjalanan', (req, res) => {
             
             return {
                 id: row.id,
+                device_id: row.device_id,
                 latitude: row.latitude,
                 longitude: row.longitude,
                 timestamp: row.timestamp,
