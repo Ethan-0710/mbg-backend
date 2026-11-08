@@ -103,7 +103,7 @@ async function ambilDataPerjalanan() {
                 iconKategori = "🚗";
             }
 
-            const tr = document.createElement('tr');
+                        const tr = document.createElement('tr');
             tr.className = "hover:bg-gray-50";
             tr.innerHTML = `
                 <td class="p-4 font-medium">${row.id}</td>
@@ -120,6 +120,7 @@ async function ambilDataPerjalanan() {
                 </td>
             `;
             tabelBody.appendChild(tr);
+            
         });
 
     } catch (error) {
