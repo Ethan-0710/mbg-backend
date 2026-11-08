@@ -1,6 +1,6 @@
 const filterTanggal = document.getElementById('filterTanggal');
 const tabelBody = document.getElementById('tabelBody');
-
+const filterSupir = document.getElementById('filterSupir');
 // Header untuk skip halaman peringatan ngrok
 const NGROK_HEADERS = { 'ngrok-skip-browser-warning': 'true' };
 
@@ -29,15 +29,43 @@ function formatWIB(timestamp) {
     });
 }
 
+// ===== Fungsi ambil daftar HP Supir untuk Dropdown =====
+async function loadDaftarSupir() {
+    try {
+        const res = await fetch('/api/gps/list');
+        const data = await res.json();
+        
+        // Ambil device_id yang unik saja
+        const uniqueIds = [...new Set(data.map(item => item.device_id))];
+        
+        uniqueIds.forEach(id => {
+            if(id) { 
+                const option = document.createElement('option');
+                option.value = id;
+                option.text = `Supir (${id.substring(0, 8)}...)`; 
+                filterSupir.appendChild(option);
+            }
+        });
+    } catch (error) {
+        console.error("Gagal load daftar supir:", error);
+    }
+}
+
 
 // ===== 2. Ambil data perjalanan =====
 async function ambilDataPerjalanan() {
     const tanggal = filterTanggal.value;
-    
+    const supirId = filterSupir.value;
+
     tabelBody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-blue-500">Memuat data...</td></tr>`;
 
     try {
-        const res = await fetch(`/api/perjalanan?tanggal=${tanggal}`, { headers: NGROK_HEADERS });
+        let url = `/api/perjalanan?tanggal=${tanggal}`;
+        if (supirId) {
+            url += `&device_id=${supirId}`; // Tambahkan ID jika dipilih
+        }
+
+        const res = await fetch(url, { headers: NGROK_HEADERS });
         const data = await res.json();
 
         // ===== Update ringkasan =====

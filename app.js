@@ -230,20 +230,24 @@ app.get('/api/gps/distance', (req, res) => {
 // ===== Endpoint: Analisis Perjalanan (Klasifikasi Titik) =====
 app.get('/api/perjalanan', (req, res) => {
     const tanggal = req.query.tanggal;
+    const deviceId = req.query.device_id;
     
-    let query, params;
+    let query = 'SELECT * FROM gps_data WHERE 1=1'; 
+    let params = [];
     
+    // Jika tanggal dipilih, tambahkan ke query
     if (tanggal) {
-        query = `
-            SELECT * FROM gps_data 
-            WHERE date(timestamp / 1000, 'unixepoch', '+7 hours') = ?
-            ORDER BY timestamp ASC
-        `;
-        params = [tanggal];
-    } else {
-        query = 'SELECT * FROM gps_data ORDER BY timestamp ASC';
-        params = [];
+        query += ` AND date(timestamp / 1000, 'unixepoch', '+7 hours') = ?`;
+        params.push(tanggal);
     }
+
+    // Jika supir dipilih, tambahkan ke query
+    if (deviceId) {
+        query += ` AND device_id = ?`;
+        params.push(deviceId);
+    }
+
+    query += ' ORDER BY timestamp ASC';
     
     db.all(query, params, (err, rows) => {
         if (err) return res.status(500).json({ error: err.message });
