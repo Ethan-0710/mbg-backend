@@ -304,23 +304,25 @@ app.get('/api/perjalanan', (req, res) => {
         let waktuPerjalananMenit = 0;
         let waktuPerjalananFormat = '-';
         
-        if (titikRumah.length > 0 && titikKampus.length > 0) {
-            // Titik rumah TERAKHIR (saat benar-benar berangkat)
-            const rumahTerakhir = titikRumah[titikRumah.length - 1];
-            // Titik kampus PERTAMA (saat benar-benar tiba)
-            const kampusPertama = titikKampus[0];
-            
-            waktuBerangkat = rumahTerakhir.timestamp;
-            waktuTiba = kampusPertama.timestamp;
-            
-            const selisihMs = kampusPertama.timestamp - rumahTerakhir.timestamp;
-            waktuPerjalananMenit = Math.round(selisihMs / 1000 / 60);
-            
-            const jam = Math.floor(waktuPerjalananMenit / 60);
-            const menit = waktuPerjalananMenit % 60;
-            waktuPerjalananFormat = jam > 0 
-                ? `${jam} jam ${menit} menit` 
-                : `${menit} menit`;
+        if (rows.length > 0) {
+            // Waktu berangkat = data GPS PERTAMA yang masuk di hari itu
+            waktuBerangkat = rows[0].timestamp; 
+
+            // Cari titik pertama kali masuk area Kampus
+            if (titikKampus.length > 0) {
+                const kampusPertama = titikKampus[0];
+                waktuTiba = kampusPertama.timestamp;
+                
+                // Hitung selisih
+                const selisihMs = waktuTiba - waktuBerangkat;
+                waktuPerjalananMenit = Math.round(selisihMs / 1000 / 60);
+                
+                const jam = Math.floor(waktuPerjalananMenit / 60);
+                const menit = waktuPerjalananMenit % 60;
+                waktuPerjalananFormat = jam > 0 
+                    ? `${jam} jam ${menit} menit` 
+                    : `${menit} menit`;
+            }
         }
         
         // ===== Kirim hasil =====
