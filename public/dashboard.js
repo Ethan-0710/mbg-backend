@@ -136,3 +136,4 @@ loadDaftarSupir().then(() => {
 
 // ===== 4. Filter change =====
 filterTanggal.addEventListener('change', ambilDataPerjalanan);
+filterSupir.addEventListener('change', ambilDataPerjalanan);
