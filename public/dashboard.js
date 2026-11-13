@@ -130,7 +130,9 @@ async function ambilDataPerjalanan() {
 }
 
 // ===== 3. Init =====
-setTanggalDefault().then(() => ambilDataPerjalanan());
+loadDaftarSupir().then(() => {
+    setTanggalDefault().then(() => ambilDataPerjalanan());
+});
 
 // ===== 4. Filter change =====
 filterTanggal.addEventListener('change', ambilDataPerjalanan);
